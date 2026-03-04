@@ -1123,7 +1123,7 @@ function openContactIntentModal(type, url){
     if (!contactIntentModal || !url) { return; }
     pendingMessengerType = type;
     pendingMessengerUrl = url;
-    pendingMessengerGoal = type === 'telegram' ? 'tg_click' : 'wa_click';
+    pendingMessengerGoal = '';
     if (intentMessengerLabel) { intentMessengerLabel.textContent = type === 'telegram' ? 'Telegram' : 'WhatsApp'; }
     if (intentTopic) { intentTopic.value = ''; }
     if (intentReadyCheckbox) { intentReadyCheckbox.checked = false; }
@@ -1187,8 +1187,8 @@ function handleIntentConfirm(){
     if (!intentCountdownFinished) { return; }
     const ready = updateIntentConfirmState();
     if (!ready) { return; }
-    if (typeof ym === 'function' && YM_COUNTER && pendingMessengerGoal) {
-        try { ym(YM_COUNTER, 'reachGoal', pendingMessengerGoal); } catch (err) {}
+    if (typeof ym === 'function' && YM_COUNTER) {
+        try { ym(YM_COUNTER, 'reachGoal', 'all_messenger'); } catch (err) {}
     }
     const target = pendingMessengerUrl;
     closeContactIntentModal();
@@ -1244,8 +1244,6 @@ ym(SITE_SETTINGS.yandexMetrikaId,"init",{clickmap:true,trackLinks:true,accurateT
 
 </body>
 </html>
-
-
 
 
 
